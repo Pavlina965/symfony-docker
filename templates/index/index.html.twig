@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello IndexController!{% endblock %}
+
+{% block body %}
+{% for article in articles %}
+    <p>{{ article.name }}</p><p> {{ article.content }} {{ article.date|date("d/m/y") }}</p>
+    {% endfor %}
+{% endblock %}
