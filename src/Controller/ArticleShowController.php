@@ -11,11 +11,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleShowController extends AbstractController
 
 {
-    #[Route('/article/{id}',methods: 'GET')]
-    public function ArticleShow(ManagerRegistry $doctrine, int $id): Response
+    #[Route('/article/{id}', name: 'article.detail',methods: 'GET')]
+    public function ArticleShow(Article $article): Response
     {
-        $articleManager = $doctrine->getManager();
-        $article = $doctrine->getRepository(Article::class)->find($id);
+
         return $this->render('article.html.twig', ['article'=>$article] );
     }
 

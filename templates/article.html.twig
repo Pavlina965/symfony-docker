@@ -4,4 +4,5 @@
     <h4>{{ article.name }}</h4>
     <p>{{ article.content }}</p>
     <p>{{ article.date|date("d/m/y") }}</p>
+    <button> <a href="{{ path('app_index') }}">back</a></button>
 {% endblock body %}
