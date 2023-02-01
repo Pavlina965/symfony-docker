@@ -12,9 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class IndexController extends AbstractController
 {
     #[Route(name: 'app_index')]
-    public function createArticle(ManagerRegistry $doctrine): Response
+    public function getArticle(ManagerRegistry $doctrine): Response
     {
-        $articleManager = $doctrine->getManager();
+
         $article = $doctrine->getRepository(Article::class)->findAll();
         return $this->render("index/index.html.twig",['articles'=>$article]);
     }

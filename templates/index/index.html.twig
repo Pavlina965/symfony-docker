@@ -5,11 +5,13 @@
         <h1>Articles</h1>
     {% endblock header %}
 {% for article in articles %}
-    <p><a href="{{ path('article.detail', {id: article.id}) }}">{{ article.name }}</a></p>
-    <p>{{ article.date|date("d/m/y") }}</p>
+    <p><a href="{{ path('article_show', {id: article.id}) }}">{{ article.name }}</a></p>
+    <p>datum vytvoření: {{ article.date|date("d.m.y") }}</p>
     <p>{{ article.id }}</p>
+    <span><a>edit</a></span>
+    <span><a>delete</a></span>
     <hr>
     {% endfor %}
 
-    <button>Create article</button>
+    <p><a>Create article</a></p>
 {% endblock %}
