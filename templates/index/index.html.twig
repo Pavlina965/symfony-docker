@@ -9,9 +9,14 @@
     <p>datum vytvoření: {{ article.date|date("d.m.y") }}</p>
     <p>{{ article.id }}</p>
     <span><a>edit</a></span>
-    <span><a>delete</a></span>
+    <span><a href="{{ path('article_delete',{id: article.id}) }}">delete</a></span>
     <hr>
     {% endfor %}
 
-    <p><a>Create article</a></p>
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <p><a href="{{ path('article_create')}}">Create article</a></p>
 {% endblock %}

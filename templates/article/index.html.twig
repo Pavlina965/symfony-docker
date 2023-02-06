@@ -8,7 +8,7 @@
     {% endblock header %}
     <p>{{ article.content }}</p>
     <p>vytvořeno: {{ article.date|date("d.m.Y") }}</p>
-    <button>edit</button>
-    <button>delete</button>
-    <a href="{{ path('app_index') }}">back</a>
+    <span><a>edit</a></span>
+    <span><a >delete</a></span>
+    <p><a href="{{ path('app_index') }}">back</a></p>
 {% endblock %}
