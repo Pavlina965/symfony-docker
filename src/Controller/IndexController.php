@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class IndexController extends AbstractController
 {
     #[Route(name: 'app_index')]
-    public function getArticle(ManagerRegistry $doctrine): Response
+    public function getArticles(ManagerRegistry $doctrine): Response
     {
 
         $article = $doctrine->getRepository(Article::class)->findAll();

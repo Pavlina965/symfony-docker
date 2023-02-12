@@ -13,28 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends AbstractController
 {
 
-    #[Route('/article', name: 'article_create')]
-    public function createArticle(ManagerRegistry $doctrine): Response
-    {
-        $entityManager = $doctrine->getManager();
 
-        $article = new Article();
-        $article->setName('New fcking Article');
-        $article->setContent('This is really new article.');
-        $article->setDate(new DateTime());
-        $entityManager->persist($article);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_index');
-        //return new Response('new article with ID ' . $article->getId());
-
-    }
 
     #[Route('article/{id}', name: 'article_show', methods: 'GET')]
     public function articleShow(Article $article): Response
     {
 
-        return $this->render('article/index.html.twig', ['article' => $article]);
+        return $this->render('article/createArticle.html.twig', ['article' => $article]);
     }
 
     #[Route('article/delete/{id}', name: 'article_delete')]
