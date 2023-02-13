@@ -9,6 +9,6 @@
     <p>{{ article.content }}</p>
     <p>vytvořeno: {{ article.date|date("d.m.Y") }}</p>
     <span><a>edit</a></span>
-    <span><a >delete</a></span>
+    <span><a href="{{ path('article_delete',{id: article.id}) }}">delete</a></span>
     <p><a href="{{ path('app_index') }}">back</a></p>
 {% endblock %}
