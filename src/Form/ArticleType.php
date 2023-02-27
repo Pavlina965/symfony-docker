@@ -15,11 +15,12 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name',TextType::class,['label'=>'Name: '])
-            ->add('content',TextareaType::class,['label'=>'Content: '])
-            ->add('date',DateType::class)
-
-        ;
+            ->add('name', TextType::class, ['label' => 'Name: '])
+            ->add('content', TextareaType::class, ['label' => 'Content: '])
+            ->add('date', DateType::class,
+                ['placeholder' => ['year' => 'Year',], 'years' => range(date('Y') - 3, date('Y')),'data' => new \DateTime(),]
+            )
+            ->add('Submit', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

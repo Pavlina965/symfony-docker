@@ -28,8 +28,8 @@ class ArticleController extends AbstractController
         return $this->render('article/index.html.twig', ['article' => $article]);
     }
 
-    #[Route('article/{id}/delete', name: 'article_delete')]
-    public function articleDelete(Article $article, int $id): Response
+    #[Route('article/delete/{id}', name: 'article_delete')]
+    public function articleDelete(int $id): Response
     {
         $entityManager = $this->doctrine->getManager();
         $article = $this->doctrine->getRepository(Article::class)->find($id);
@@ -43,8 +43,8 @@ class ArticleController extends AbstractController
         return $this->redirectToRoute('app_index');
     }
 
-    #[Route('article/{id}/edit', name: 'article_edit')]
-    public function articleEdit(Article $article, Request $request, EntityManagerInterface $em)
+    #[Route('article/edit/{id}', name: 'article_edit')]
+    public function articleEdit(Article $article, Request $request, EntityManagerInterface $em) :Response
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);

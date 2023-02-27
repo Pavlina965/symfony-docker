@@ -41,20 +41,4 @@ class CreateArticleController extends AbstractController
         return $this->render('create_article/createArticle.html.twig', ['form'=>$form->createView()]);
     }
 
-    //    #[Route('/CreateArticle', name: 'article_create')]
-    //public function createArticle(ManagerRegistry $doctrine): Response
-    //{
-    //    $entityManager = $doctrine->getManager();
-//
-    //    $article = new Article();
-    //    $article->setName('New fcking Article');
-    //    $article->setContent('This is really new article.');
-    //    $article->setDate(new DateTime());
-    //    $entityManager->persist($article);
-    //    $entityManager->flush();
-//
-    //    return $this->redirectToRoute('app_index');
-    //    //return new Response('new article with ID ' . $article->getId());
-//
-    //}
 }
