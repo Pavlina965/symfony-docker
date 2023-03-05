@@ -54,6 +54,10 @@ class ArticleController extends AbstractController
     {
         $entityManager = $this->doctrine->getManager();
         $article = $this->doctrine->getRepository(Article::class)->find($id);
+        $comments =$this->doctrine->getRepository(Comment::class)->findBy(['article'=>$article]);
+        foreach ($comments as $comment ){
+            $entityManager->remove($comment);
+        }
         $entityManager->remove($article);
         $entityManager->flush();
 
@@ -80,14 +84,14 @@ class ArticleController extends AbstractController
         }
         return $this->render('article/editArticle.html.twig', ['form' => $form->createView()]);
     }
-    #[route('deleteComment/{id}', name:'comment_delete')]
-    public function deleteComment(int $id): Response
+    #[route('article/{id}/comment/{commentId}', name:'comment_delete')]
+    public function deleteComment(int $commentId, Article $article): Response
     {
         $em = $this->doctrine->getManager();
-        $comment = $this->doctrine->getRepository(Comment::class)->find($id);
+        $comment = $this->doctrine->getRepository(Comment::class)->find($commentId);
         $em->remove($comment);
         $em->flush();
 
-        return $this->redirectToRoute('app_index');
+        return $this->redirectToRoute('article_show',['id'=>$article->getId()]);
     }
 }

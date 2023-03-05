@@ -1,4 +1,8 @@
-
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -9,37 +13,63 @@ td, th {
     text-align: left;
     padding: 8px;
 }
-td{
+
+td {
     border: 1px solid #dddddd;
 }
+
 tr:nth-child(even) {
     background-color: rgba(221, 221, 221, 0.58);
+}
+
+.article {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 4px;
+    min-height: 50vh;
+    width: 30%;
+    border: 1px solid #969696;
+}
+
+.comment {
+    box-shadow: 0 5px 10px #969696;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 30%;
+}
+.comment:nth-child(even){
+    background-color: #969696;
 }
 form {
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
-    height: 80vh;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 5px 10px #969696;
+
 }
-form div{
+
+form div {
     display: flex;
     flex-direction: column;
     width: 10rem;
 }
-form button{
+
+form button {
     background-color: #ffffff;
     height: 3rem;
     width: 10rem;
     border-radius: 5px;
     border: 1px solid #969696;
 }
+
 input:focus, input:active, textarea:focus, textarea:active {
     outline: none;
     border: solid 2px #969696;
 }
+
 input, textarea {
     border: solid 1px #969696;
     height: 20px;
@@ -48,13 +78,16 @@ input, textarea {
     border-radius: 5px;
     color: black;
 }
-textarea{
+
+textarea {
     height: 10vh;
 }
-form button:active, form button:hover{
+
+form button:active, form button:hover {
     background-color: #969696;
 }
-#article_date{
+
+#article_date {
     display: flex;
     flex-direction: row;
     justify-content: center;

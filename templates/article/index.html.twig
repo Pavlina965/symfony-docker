@@ -3,21 +3,20 @@
 {% block title %}{{ article.name }}{% endblock %}
 
 {% block body %}
-    {% block header %}
-        <h3>{{ article.name }}</h3>
-    {% endblock header %}
+    <h3>{{ article.name }}</h3>
     <div class="article">
         <p>{{ article.content }}</p>
-        <p>vytvořeno: {{ article.date|date("d.m.Y") }}</p>
-        <span><a href="{{ path('article_edit',{id:article.id}) }}">edit</a></span>
-        <span><a href="{{ path('article_delete',{id:article.id}) }}">delete</a></span>
-
+        <div>
+            <p>vytvořeno: {{ article.date|date("d.m.Y") }}</p>
+            <span><a href="{{ path('article_edit',{id:article.id}) }}">edit</a></span>
+            <span><a href="{{ path('article_delete',{id:article.id}) }}">delete</a></span>
+        </div>
     </div>
     {% for comment in comments %}
         <div class="comment">
             <p><strong>{{ comment.name }}</strong></p>
             <p>{{ comment.content }}</p>
-            <p><a  href="{{ path('comment_delete', {id:comment.id}) }}">delete</a></p>
+            <p><a href="{{ path('comment_delete', {'commentId':comment.id,'id':article.id }) }}">delete</a></p>
         </div>
 
     {% endfor %}
