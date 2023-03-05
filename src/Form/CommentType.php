@@ -10,17 +10,18 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleType extends AbstractType
+class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, ['label' => 'Name: '])
-            ->add('content', TextareaType::class, ['label' => 'Content: '])
+            ->add('name', TextType::class)
+            ->add('comment', TextareaType::class)
             ->add('date', DateType::class,
-                ['widget'=>'singe_text','data' => new \DateTime(),]
-            )
-            ->add('Submit', SubmitType::class);
+            ['widget'=>'single_text','data' => new \DateTime()])
+            ->add('Submit', SubmitType::class)
+
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
