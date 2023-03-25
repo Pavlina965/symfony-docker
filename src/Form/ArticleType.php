@@ -18,7 +18,7 @@ class ArticleType extends AbstractType
             ->add('name', TextType::class, ['label' => 'Name: '])
             ->add('content', TextareaType::class, ['label' => 'Content: '])
             ->add('date', DateType::class,
-                ['widget'=>'singe_text','data' => new \DateTime(),]
+                ['widget'=>'single_text','data' => new \DateTime(),]
             )
             ->add('Submit', SubmitType::class);
     }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Form\ArticleType;
+use App\Repository\ArticleRepository;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CreateArticleController extends AbstractController
 {
     #[route('/newArticle', name: 'article_create')]
-    public function CreateArticle(EntityManagerInterface $em, Request $request): Response
+    public function CreateArticle(ArticleRepository $articleRepository, Request $request): Response
     {
         $form = $this->createForm(ArticleType::class);
         $form->handleRequest($request);
@@ -30,8 +31,7 @@ class CreateArticleController extends AbstractController
             $article->setContent($data['content']);
             $article->setDate($data['date']);
 
-            $em ->persist($article);
-            $em->flush();
+            $articleRepository ->save($article, true);
 
             $this->addFlash(
                 'notice','New Article has been created.');
