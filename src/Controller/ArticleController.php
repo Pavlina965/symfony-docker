@@ -43,11 +43,9 @@ class ArticleController extends AbstractController
         return $this->render('article/index.html.twig', ['commentForm' => $form->createView(), 'article' => $article, 'comments'=>$comment]);
     }
 
-    #[
-        Route('article/delete/{id}', name: 'article_delete')]
+    #[Route('admin/article/delete/{id}', name: 'article_delete')]
     public function articleDelete(ArticleRepository $articleRepository,CommentRepository $commentRepository,int $id): Response
     {
-
         $article = $articleRepository->find($id);
         $comments =$commentRepository->findBy(['article'=>$article]);
         foreach ($comments as $comment ){
@@ -58,11 +56,10 @@ class ArticleController extends AbstractController
         $this->addFlash(
             'notice', 'Article with id ' . $id . ' has been deleted.'
         );
-
         return $this->redirectToRoute('app_index');
     }
 
-    #[Route('article/edit/{id}', name: 'article_edit')]
+    #[Route('admin/article/edit/{id}', name: 'article_edit')]
     public function articleEdit(Article $article, Request $request, ArticleRepository $articleRepository): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
@@ -76,12 +73,12 @@ class ArticleController extends AbstractController
         }
         return $this->render('article/editArticle.html.twig', ['form' => $form->createView()]);
     }
+
     #[route('article/{id}/comment/{commentId}', name:'comment_delete')]
     public function deleteComment(int $commentId, Article $article,CommentRepository $commentRepository): Response
     {
         $comment = $commentRepository->find($commentId);
         $commentRepository->remove($comment,true);
-
 
         return $this->redirectToRoute('article_show',['id'=>$article->getId()]);
     }

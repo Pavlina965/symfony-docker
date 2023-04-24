@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CreateArticleController extends AbstractController
 {
-    #[route('/newArticle', name: 'article_create')]
+    #[route('/admin/newArticle', name: 'article_create')]
     public function CreateArticle(ArticleRepository $articleRepository, Request $request): Response
     {
         $form = $this->createForm(ArticleType::class);
