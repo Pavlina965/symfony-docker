@@ -22,15 +22,19 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class LoginFormAuthenticator extends AbstractAuthenticator
-{
 
+
+class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
+{
+    use TargetPathTrait;
     private UserRepository $userRepository;
     private  RouterInterface $router;
 
@@ -59,36 +63,22 @@ class LoginFormAuthenticator extends AbstractAuthenticator
             //    //dd($credentials, $user);
             //    //return $credentials==='tada';
             //}, $password)
-
-
-
-
         // TODO: Implement authenticate() method.
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        if($target=$this->getTargetPath($request->getSession(),$firewallName)){
+            
+        }
         return new RedirectResponse(
             $this->router->generate('app_index')
         );
         // TODO: Implement onAuthenticationSuccess() method.
     }
 
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
-    {
-        //dd($this->userRepository->findAll());
-        $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
-        return new RedirectResponse(
-            $this->router->generate('app_login')
-        );
-
-        // TODO: Implement onAuthenticationFailure() method.
-
-    }
-
-    public function supports(Request $request): ?bool
-    {
-        return ($request->getPathInfo() === '/login' && $request->isMethod('POST'));
-        // TODO: Implement supports() method.
-    }
+ protected function getLoginUrl(Request $request): string
+ {
+    return $this->router->generate('app_login');
+ }
 }
