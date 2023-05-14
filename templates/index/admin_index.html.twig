@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% block header %}
+        <h1>Articles</h1>
+    {% endblock header %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>ID</th>
+        </tr>
+        {% for article in articles %}
+            <tr>
+                <td><a href="{{ path('article_show', {id: article.id}) }}">{{ article.name }}</a></td>
+                <td>{{ article.date|date("d.m.y") }}</td>
+                <td>{{ article.id }}</td>
+                <td><a href="{{ path('article_edit',{id:article.id}) }}">edit </a></td>
+                <td><a href="{{ path('article_delete',{id: article.id}) }}">delete</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+    {#  {% for article in articles %}
+        <p><a href="{{ path('article_show', {id: article.id}) }}">{{ article.name }}</a></p>
+        <p>datum vytvoření: {{ article.date|date("d.m.y") }}</p>
+        <p>{{ article.id }}</p>
+        <span><a href="{{ path('article_edit',{id:article.id}) }}">edit </a></span>
+        <span><a href="{{ path('article_delete',{id: article.id}) }}">delete</a></span>
+        <hr>
+    {% endfor %}
+
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}#}
+    <p><a href="{{ path('article_create') }}">Create article</a></p>
+{% endblock %}

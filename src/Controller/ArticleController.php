@@ -22,39 +22,40 @@ use Symfony\Component\HttpFoundation\Request;
 class ArticleController extends AbstractController
 {
     #[Route('article/{id}', name: 'article_show')]
-    public function articleShow(Request $request,CommentRepository $commentRepository, Article $article): Response
+    public function articleShow(Request $request, CommentRepository $commentRepository, Article $article): Response
     {
-        $form = $this->createForm(CommentType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $NewComment = new Comment();
-            $NewComment->setName($data['name']);
-            $NewComment->setContent($data['comment']);
-            $NewComment->setDate($data['date']);
-            $NewComment->setArticle($article);
+            $form = $this->createForm(CommentType::class);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $data = $form->getData();
+                $NewComment = new Comment();
+                $NewComment->setName($data['name']);
+                $NewComment->setContent($data['comment']);
+                $NewComment->setDate($data['date']);
+                $NewComment->setArticle($article);
 
-            $commentRepository->save($NewComment,true);
+                $commentRepository->save($NewComment, true);
 
 
-            return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
+                return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
+            }
+            $comment = $commentRepository->findBy(['article' => $article]);
+            return $this->render('article/index.html.twig', ['commentForm' => $form->createView(), 'article' => $article, 'comments' => $comment]);
         }
-        $comment =$commentRepository->findBy(['article'=>$article]);
-        return $this->render('article/index.html.twig', ['commentForm' => $form->createView(), 'article' => $article, 'comments'=>$comment]);
-    }
 
     #[Route('admin/article/delete/{id}', name: 'article_delete')]
-    public function articleDelete(ArticleRepository $articleRepository,CommentRepository $commentRepository,int $id): Response
+    public function articleDelete(ArticleRepository $articleRepository, CommentRepository $commentRepository, int $id): Response
     {
         $article = $articleRepository->find($id);
-        $comments =$commentRepository->findBy(['article'=>$article]);
-        foreach ($comments as $comment ){
+        $comments = $commentRepository->findBy(['article' => $article]);
+        foreach ($comments as $comment) {
             $commentRepository->remove($comment);
         }
-        $articleRepository->remove($article,true);
+        $articleRepository->remove($article, true);
 
         $this->addFlash(
-            'notice', 'Article with id ' . $id . ' has been deleted.'
+            'notice',
+            'Article with id ' . $id . ' has been deleted.'
         );
         return $this->redirectToRoute('app_index');
     }
@@ -66,7 +67,7 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $articleRepository->save($article,true);
+            $articleRepository->save($article, true);
             //$this->addFlash('Article updated.');
 
             return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
@@ -74,12 +75,12 @@ class ArticleController extends AbstractController
         return $this->render('article/editArticle.html.twig', ['form' => $form->createView()]);
     }
 
-    #[route('article/{id}/comment/{commentId}', name:'comment_delete')]
-    public function deleteComment(int $commentId, Article $article,CommentRepository $commentRepository): Response
+    #[route('article/{id}/comment/{commentId}', name: 'comment_delete')]
+    public function deleteComment(int $commentId, Article $article, CommentRepository $commentRepository): Response
     {
         $comment = $commentRepository->find($commentId);
-        $commentRepository->remove($comment,true);
+        $commentRepository->remove($comment, true);
 
-        return $this->redirectToRoute('article_show',['id'=>$article->getId()]);
+        return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
     }
 }
