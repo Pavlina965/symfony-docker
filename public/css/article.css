@@ -26,6 +26,7 @@ tr:nth-child(even) {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 10px;
     padding: 4px;
     min-height: 50vh;
