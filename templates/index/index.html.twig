@@ -1,12 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-        {% for article in articles %}
-            <div class = "article">
-                <p><a href="{{ path('article_show', {id: article.id}) }}">{{ article.name }}</a>
-                <p>{{ article.content }}
-                <p>{{ article.date|date("d.m.y") }}
-            </div>
-        {% endfor %}
-        <p><a href="{{ path('article_create') }}">Create article</a></p>
+	<div class="Content">
+		{% for article in articles %}
+			<div class="article">
+				<p>
+					<a href="{{ path('article_show', {id: article.id}) }}">{{ article.name }}</a>
+				</p>
+				<p class="articleContent">{{ article.content }}</p>
+				<div class="articleInfo">
+					<span>
+						number of comments
+					</span>
+					<span>{{ article.date|date("d.m.y") }}</span>
+
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	<p>
+		<a href="{{ path('article_create') }}">Create article</a>
+	</p>
 {% endblock %}

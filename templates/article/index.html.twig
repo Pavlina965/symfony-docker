@@ -1,25 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ article.name }}{% endblock %}
+{% block title %}
+	{{ article.name }}
+{% endblock %}
 
 {% block body %}
-    <h3>{{ article.name }}</h3>
-    <div class="article">
-        <p>{{ article.content }}</p>
-        <div>
-            <p>vytvořeno: {{ article.date|date("d.m.Y") }}</p>
-            <span><a href="{{ path('article_edit',{id:article.id}) }}">edit</a></span>
-            <span><a href="{{ path('article_delete',{id:article.id}) }}">delete</a></span>
-        </div>
-    </div>
-    {% for comment in comments %}
-        <div class="comment">
-            <p><strong>{{ comment.name }}</strong></p>
-            <p>{{ comment.content }}</p>
-            <p><a href="{{ path('comment_delete', {'commentId':comment.id,'id':article.id }) }}">delete</a></p>
-        </div>
+	<div class="Content">
+		<div class="article">
+			<h3>{{ article.name }}</h3>
+			<p class="articleContent">{{ article.content }}</p>
+			<div class= "articleInfo">
+			<p>vytvořeno:
+				{{ article.date|date("d.m.Y") }}
+			</p>
+			<div class="articleEdit">
+				<span>
+					<a href="{{ path('article_edit',{id:article.id}) }}">edit</a>
+				</span>
+				<span>
+					<a href="{{ path('article_delete',{id:article.id}) }}">delete</a>
+				</span>
+			</div>
+			</div>
+		</div>
 
-    {% endfor %}
-    {{ form(commentForm) }}
-    <p><a href="{{ path('app_index') }}">back</a></p>
-{% endblock %}
+		{% for comment in comments %}
+			<div class="comment">
+				<p>
+					<strong>{{ comment.name }}</strong>
+				</p>
+				<p>{{ comment.content }}</p>
+				<p>
+					<a href="{{ path('comment_delete', {'commentId':comment.id,'id':article.id }) }}">delete</a>
+				</p>
+
+			{% endfor %}
+			{{ form(commentForm) }}
+			</div>
+			<p>
+				<a href="{{ path('app_index') }}">back</a>
+			</p>
+		</div>
+	{% endblock %}

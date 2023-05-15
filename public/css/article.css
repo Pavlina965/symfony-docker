@@ -1,7 +1,26 @@
-.Content{
+.Content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 10px;
+}
+
+.articleInfo {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.articleContent{
+    border: 1px solid black;
+    height: 500px;
+    width: 90%;
+    padding: 10px 20px;
+}
+.articleEdit span{
+    margin: 2px;
 }
 table {
     font-family: arial, sans-serif;
@@ -9,7 +28,8 @@ table {
     width: 100%;
 }
 
-td, th {
+td,
+th {
     text-align: left;
     padding: 8px;
 }
@@ -40,9 +60,11 @@ tr:nth-child(even) {
     padding: 10px;
     width: 30%;
 }
-.comment:nth-child(even){
+
+.comment:nth-child(even) {
     background-color: #969696;
 }
+
 form {
     display: flex;
     flex-direction: column;
@@ -66,12 +88,16 @@ form button {
     border: 1px solid #969696;
 }
 
-input:focus, input:active, textarea:focus, textarea:active {
+input:focus,
+input:active,
+textarea:focus,
+textarea:active {
     outline: none;
     border: solid 2px #969696;
 }
 
-input, textarea {
+input,
+textarea {
     border: solid 1px #969696;
     height: 20px;
     box-shadow: 0 5px 5px #dddddd;
@@ -84,7 +110,8 @@ textarea {
     height: 10vh;
 }
 
-form button:active, form button:hover {
+form button:active,
+form button:hover {
     background-color: #969696;
 }
 
