@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="Content">
+	<div class="content">
 		{% for article in articles %}
 			<div class="article">
 				<p>
@@ -10,9 +10,9 @@
 				<p class="articleContent">{{ article.content }}</p>
 				<div class="articleInfo">
 					<span>
-						number of comments
+						number of comments: {{article.getComments|length}}
 					</span>
-					<span>{{ article.date|date("d.m.y") }}</span>
+					<span>date of publication: {{ article.date|date("d.m.y") }}</span>
 
 				</div>
 			</div>

@@ -5,40 +5,40 @@
 {% endblock %}
 
 {% block body %}
-	<div class="Content">
+	<div class="content">
 		<div class="article">
 			<h3>{{ article.name }}</h3>
 			<p class="articleContent">{{ article.content }}</p>
-			<div class= "articleInfo">
-			<p>vytvořeno:
-				{{ article.date|date("d.m.Y") }}
-			</p>
-			<div class="articleEdit">
-				<span>
-					<a href="{{ path('article_edit',{id:article.id}) }}">edit</a>
-				</span>
-				<span>
-					<a href="{{ path('article_delete',{id:article.id}) }}">delete</a>
-				</span>
-			</div>
+			<div class="articleInfo">
+				<p>vytvořeno:
+					{{ article.date|date("d.m.Y") }}
+				</p>
+				<div class="articleEdit">
+					<span>
+						<a href="{{ path('article_edit',{id:article.id}) }}">edit</a>
+					</span>
+					<span>
+						<a href="{{ path('article_delete',{id:article.id}) }}">delete</a>
+					</span>
+				</div>
 			</div>
 		</div>
 
-		{% for comment in comments %}
-			<div class="comment">
-				<p>
-					<strong>{{ comment.name }}</strong>
-				</p>
-				<p>{{ comment.content }}</p>
-				<p>
-					<a href="{{ path('comment_delete', {'commentId':comment.id,'id':article.id }) }}">delete</a>
-				</p>
-
-			{% endfor %}
+		<div class="comments">
 			{{ form(commentForm) }}
+				<div class="commentContent">
+					{% for comment in comments %}
+						<div class="comment">
+							<p>
+								<strong>{{ comment.name }}</strong>
+							</p>
+							<p>{{ comment.content }}</p>
+							<p>
+								<a href="{{ path('comment_delete', {'commentId':comment.id,'id':article.id }) }}">delete</a>
+							</p>
+						</div>
+					{% endfor %}
+				</div>
 			</div>
-			<p>
-				<a href="{{ path('app_index') }}">back</a>
-			</p>
 		</div>
 	{% endblock %}

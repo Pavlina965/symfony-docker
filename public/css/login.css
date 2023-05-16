@@ -1,0 +1,8 @@
+.login{
+    display: flex;
+    margin-top: 30px;
+    justify-content: center;
+}
+.login form{
+    display: flex;
+}

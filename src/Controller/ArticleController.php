@@ -24,24 +24,24 @@ class ArticleController extends AbstractController
     #[Route('article/{id}', name: 'article_show')]
     public function articleShow(Request $request, CommentRepository $commentRepository, Article $article): Response
     {
-            $form = $this->createForm(CommentType::class);
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $data = $form->getData();
-                $NewComment = new Comment();
-                $NewComment->setName($data['name']);
-                $NewComment->setContent($data['comment']);
-                $NewComment->setDate($data['date']);
-                $NewComment->setArticle($article);
+        $form = $this->createForm(CommentType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $NewComment = new Comment();
+            $NewComment->setName($data['name']);
+            $NewComment->setContent($data['comment']);
+            $NewComment->setDate($data['date']);
+            $NewComment->setArticle($article);
 
-                $commentRepository->save($NewComment, true);
+            $commentRepository->save($NewComment, true);
 
 
-                return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
-            }
-            $comment = $commentRepository->findBy(['article' => $article]);
-            return $this->render('article/index.html.twig', ['commentForm' => $form->createView(), 'article' => $article, 'comments' => $comment]);
+            return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
         }
+        $comment = $commentRepository->findBy(['article' => $article]);
+        return $this->render('article/index.html.twig', ['commentForm' => $form->createView(), 'article' => $article, 'comments' => $comment]);
+    }
 
     #[Route('admin/article/delete/{id}', name: 'article_delete')]
     public function articleDelete(ArticleRepository $articleRepository, CommentRepository $commentRepository, int $id): Response
