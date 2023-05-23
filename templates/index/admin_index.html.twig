@@ -1,20 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<div class="content admin">
     {% block header %}
         <h1>Articles</h1>
     {% endblock header %}
     <table>
         <tr>
             <th>Name</th>
-            <th>Date</th>
+            <th>Release date</th>
             <th>ID</th>
+            <th>Released</th>
         </tr>
         {% for article in articles %}
             <tr>
                 <td><a href="{{ path('article_show', {id: article.id}) }}">{{ article.name }}</a></td>
                 <td>{{ article.date|date("d.m.y") }}</td>
                 <td>{{ article.id }}</td>
+                <td>{{article.}}</td>
                 <td><a href="{{ path('article_edit',{id:article.id}) }}">edit </a></td>
                 <td><a href="{{ path('article_delete',{id: article.id}) }}">delete</a></td>
             </tr>
@@ -37,4 +40,5 @@
         </div>
     {% endfor %}#}
     <p><a href="{{ path('article_create') }}">Create article</a></p>
+    </div>
 {% endblock %}
