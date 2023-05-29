@@ -35,39 +35,39 @@ class LoginController extends AbstractController
     #[Route('/newUser', name: 'NewUser')]
     public function newUser(UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $user = new User();
-        $user->setUsername('admin');
-        $plaintextPassword= 1234;
-        $user->setRoles(['ROLE_ADMIN']);
-        $hashedPassword =$passwordHasher->hashPassword(
-            $user,
-            $plaintextPassword
-        );
-        $user->setPassword($hashedPassword);
-        $userRepository->save($user, true);
-        return new Response('admin created');
-        
         //$user = new User();
-        //$user->setUsername('user');
-        //$plaintextPassword = 1234;
-        //$user->setRoles(['ROLE_USER']);
-        //$hashedPassword = $passwordHasher->hashPassword(
+        //$user->setUsername('admin');
+        //$plaintextPassword= 1234;
+        //$user->setRoles(['ROLE_ADMIN']);
+        //$hashedPassword =$passwordHasher->hashPassword(
         //    $user,
         //    $plaintextPassword
         //);
         //$user->setPassword($hashedPassword);
         //$userRepository->save($user, true);
-        //return new Response ('User Created');
+        //return new Response('admin created');
+
+        $user = new User();
+        $user->setUsername('user');
+        $plaintextPassword = 1234;
+        $user->setRoles(['ROLE_USER']);
+        $hashedPassword = $passwordHasher->hashPassword(
+            $user,
+            $plaintextPassword
+        );
+        $user->setPassword($hashedPassword);
+        $userRepository->save($user, true);
+        return new Response('User Created');
     }
 
     #[Route('/delU', name: 'no')]
     public function delU(UserRepository $userRepository,)
     {
-       //$id = 6;
-       //$users = $userRepository->find($id);
-       //$userRepository->remove($users,true);
-       $users = $userRepository->findAll();
-       dd($users);
+        //$id = 9;
+        //$users = $userRepository->find($id);
+        //$userRepository->remove($users,true);
+        $users = $userRepository->findAll();
+        //dd($users);
 
 
         return new Response('deleted');

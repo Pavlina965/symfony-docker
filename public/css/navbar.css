@@ -1,12 +1,27 @@
 nav{
-    width: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-color: #000000;
+  min-height: 50px;
 }
 nav ul {
+  width: 100%;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    background-color: #000000;
+ }
+ footer{
+  min-height: 50px;
+ }
+ .navBottom ul{
+  width: 100%;
+  display: flex;
+  color: white;
+  justify-content: center;
+  align-items: center;
+ }
+ .navBottom li{
+  display: flex;
  }
 nav li {
    display: inline;
@@ -20,7 +35,7 @@ nav a {
   }
   
   
- nav li a {
+nav li a {
     display: block;
     color: white;
     text-align: center;
@@ -29,7 +44,7 @@ nav a {
   }
   
   /* Change the link color to #111 (black) on hover */
- nav li a:hover {
+nav li a:hover {
     background-color: #2f2d2d;
   }
 nav li:last-child{

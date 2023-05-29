@@ -17,8 +17,8 @@ class CommentType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('comment', TextareaType::class)
-            ->add('date', DateType::class,
-            ['widget'=>'single_text','data' => new \DateTime()])
+            // ->add('date', DateType::class,
+            // ['disabled'=>true,'widget'=>'single_text','data' => new \DateTime()])
             ->add('Submit', SubmitType::class)
 
         ;

@@ -28,6 +28,9 @@ class Article
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\Column]
+    private ?int $evaulation = 0;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -100,6 +103,18 @@ class Article
                 $comment->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEvaulation(): ?int
+    {
+        return $this->evaulation;
+    }
+
+    public function setEvaulation(?int $evaulation): self
+    {
+        $this->evaulation = $evaulation;
 
         return $this;
     }

@@ -1,10 +1,21 @@
-body{
+body {
     background-color: #969696;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
 }
+
 .content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+}
+
+.admin{
+    background-color: #ffffff;
 }
 
 .articleInfo {
@@ -14,19 +25,34 @@ body{
     justify-content: space-between;
     align-items: center;
 }
-.articleContent{
+
+.articleContent {
     border: 1px solid black;
     height: 500px;
     width: 90%;
     padding: 10px 20px;
 }
-.articleEdit span{
+
+.articleEdit span {
     margin: 2px;
 }
+
+.article h3,
+.article h3 a {
+    font-family: 'Courier New', Courier, monospace;
+    text-decoration: none;
+    color: mediumslateblue;
+}
+
+.articlePrewiev:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+}
+
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    width: 80%;
 }
 
 td,
@@ -48,9 +74,13 @@ tr:nth-child(even) {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    /* margin-bottom: 10px; */
     width: 70%;
     background-color: #ffffff;
+}
+
+.article :last-child {
+    margin-bottom: 10px;
+
 }
 
 .comment {
@@ -60,17 +90,21 @@ tr:nth-child(even) {
     background-color: #ffffff;
 
 }
+
 .comment:nth-child(even) {
     background-color: #c2c2c2;
 }
-.comments{
+
+.comments {
     display: flex;
     flex-direction: row;
     width: 70%;
 }
-.commentContent{
+
+.commentContent {
     width: 70%;
 }
+
 form {
     display: flex;
     flex-direction: column;
@@ -93,7 +127,7 @@ form button {
     height: 3rem;
     width: 100%;
     border-radius: 5px;
-    border: 1px solid #969696;
+    border: 1px solid mediumslateblue;
 }
 
 input:focus,
@@ -120,7 +154,7 @@ textarea {
 
 form button:active,
 form button:hover {
-    background-color: #969696;
+    background-color: mediumslateblue;
 }
 
 #article_date {

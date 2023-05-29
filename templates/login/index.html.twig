@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	{% if error %}
-		<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-	{% endif %}
+<div class="loginContent">
+	{# <div class="errormsg">
+		{% if error %}
+			<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
+	</div> #}
 	<div class="login">
-		<form action="{{ path('app_login') }}" method="post">
+		<form class="loginForm" action="{{ path('app_login') }}" method="post">
 			<div class="username">
 				<label for="username">User:</label>
 				<input type="text" id="username" name="_username" value="{{ last_username }}">
@@ -18,11 +21,12 @@
 			type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 			{# If you want to control the URL the user is redirected to on success
-									<input type="hidden" name="_target_path" value="/account"> #}
+												<input type="hidden" name="_target_path" value="/account"> #}
 
 			<div class="submit">
 				<button type="submit">login</button>
 			</div>
 		</form>
+	</div>
 	</div>
 {% endblock %}

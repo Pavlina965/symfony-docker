@@ -8,9 +8,11 @@ use App\Form\ArticleType;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
+use App\Repository\EvaulationRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,12 +20,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ArticleController extends AbstractController
 {
     #[Route('article/{id}', name: 'article_show')]
     public function articleShow(Request $request, CommentRepository $commentRepository, Article $article): Response
     {
+      
         $form = $this->createForm(CommentType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -31,7 +36,6 @@ class ArticleController extends AbstractController
             $NewComment = new Comment();
             $NewComment->setName($data['name']);
             $NewComment->setContent($data['comment']);
-            $NewComment->setDate($data['date']);
             $NewComment->setArticle($article);
 
             $commentRepository->save($NewComment, true);
@@ -41,6 +45,12 @@ class ArticleController extends AbstractController
         }
         $comment = $commentRepository->findBy(['article' => $article]);
         return $this->render('article/index.html.twig', ['commentForm' => $form->createView(), 'article' => $article, 'comments' => $comment]);
+    }
+
+    #[Route('/article/evaulate', name: 'article_evaulate')]
+    public function evaulate(ArticleRepository $articleRepository,){
+
+
     }
 
     #[Route('admin/article/delete/{id}', name: 'article_delete')]
@@ -83,4 +93,6 @@ class ArticleController extends AbstractController
 
         return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
     }
+
+
 }

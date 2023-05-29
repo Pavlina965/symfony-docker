@@ -1,31 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        <link rel="stylesheet" href="../../css/article.css"/>
-        <link rel = "stylesheet" href="../../css/navbar.css"/>
-        <link rel = "stylesheet" href="../../css/login.css"/>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		<link rel="stylesheet" href="../../css/article.css"/>
+		<link rel="stylesheet" href="../../css/navbar.css"/>
+		<link rel="stylesheet" href="../../css/login.css"/>
 
 
-    </head>
+	</head>
 
-    <body>
-    <header>
-    </header>
-        
-        <nav>
-            <ul>
-                <li><a href={{ path('app_index') }}>Home</a></li>
-                <li><a href="news.asp">News</a></li>
-                <li><a href="contact.asp">Contact</a></li>
-                <li><a href="about.asp">About</a></li>
-                <li><a href ={{ path('app_login') }}>Log In</a></li>
-                
+	<body>
+		<nav>
+			<ul>
+				<li><a href={{path('app_index')}}>Home</a></li>
+				<li><a href="">News</a></li>
+				<li><a href="">Contact</a></li>
+				<li><a href="">About</a></li>
+				<li><a href={{path('app_login')}}>Log In</a></li>
 
-            </ul>
-        </nav>
-        {% block body %}{% endblock %}
-    </body>
+
+			</ul>
+		</nav>
+		{% block body %}{% endblock %}
+		<footer >
+        <nav class="navBottom">
+			<ul>
+				<li>
+					<a href="#">Contact</a>
+				</li>
+				<li>This is personal project</li>
+			</ul>
+            </nav>
+		</footer>
+	</body>
 </html>
