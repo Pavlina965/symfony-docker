@@ -1,44 +1,61 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{ article.name }}
+    {{ article.name }}
 {% endblock %}
 
 {% block body %}
-	<div class="content">
-		<div class="article">
-			<h3>{{ article.name }}</h3>
-			<p class="articleContent">{{ article.content }}</p>
-			<div class="articleInfo">
-				<p>vytvořeno:
-					{{ article.date|date("d.m.Y") }}
-				</p>
-				<div class="articleEdit">
-					<span>
+    <div class="content">
+        <div class="article">
+            <h3>{{ article.name }}</h3>
+            <p class="articleContent">{{ article.content }}</p>
+            <div class="articleInfo">
+                <p>vytvořeno:
+                    {{ article.date|date("d.m.Y") }}
+                </p>
+                {% set upVotes=0 %}
+                {% set downVotes=0 %}
+                {% for vote in votes %}
+                    {% if vote.getUpVote is same as (1) %}
+                    {% set upVotes = upVotes+1 %}
+                {% else %}
+                    {% set downVotes = downVotes + 1 %}
+                    {% endif %}
+                {% endfor %}
+                <p>likes: {{ upVotes }}</p>
+                <p>dislikes: {{ downVotes }}</p>
+                <div class="articleEdit">
+                    <span>
+                        <a href="{{ path('article_UpVote', {id: article.id}) }}">like</a>
+                    </span>
+                    <span>
+                        <a href="{{ path('article_DownVote', {id: article.id}) }}">dislike</a>
+                    </span>
+                    <span>
 						<a href="{{ path('article_edit',{id:article.id}) }}">edit</a>
 					</span>
-					<span>
+                    <span>
 						<a href="{{ path('article_delete',{id:article.id}) }}">delete</a>
 					</span>
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
 
-		<div class="comments">
-			{{ form(commentForm) }}
-				<div class="commentContent">
-					{% for comment in comments %}
-						<div class="comment">
-							<p>
-								<strong>{{ comment.name }}</strong>
-							</p>
-							<p>{{ comment.content }}</p>
-							<p>
-								<a href="{{ path('comment_delete', {'commentId':comment.id,'id':article.id }) }}">delete</a>
-							</p>
-						</div>
-					{% endfor %}
-				</div>
-			</div>
-		</div>
-	{% endblock %}
+        <div class="comments">
+            {{ form(commentForm) }}
+            <div class="commentContent">
+                {% for comment in comments %}
+                    <div class="comment">
+                        <p>
+                            <strong>{{ comment.name }}</strong>
+                        </p>
+                        <p>{{ comment.content }}</p>
+                        <p>
+                            <a href="{{ path('comment_delete', {'commentId':comment.id,'id':article.id }) }}">delete</a>
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

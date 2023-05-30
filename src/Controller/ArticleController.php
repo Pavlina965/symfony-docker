@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Entity\Votes;
 use App\Form\ArticleType;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
-use App\Repository\EvaulationRepository;
+use App\Repository\VotesRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -26,9 +27,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class ArticleController extends AbstractController
 {
     #[Route('article/{id}', name: 'article_show')]
-    public function articleShow(Request $request, CommentRepository $commentRepository, Article $article): Response
+    public function articleShow(Request $request, CommentRepository $commentRepository, Article $article, VotesRepository $votesRepository): Response
     {
-      
         $form = $this->createForm(CommentType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -44,13 +44,31 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
         }
         $comment = $commentRepository->findBy(['article' => $article]);
-        return $this->render('article/index.html.twig', ['commentForm' => $form->createView(), 'article' => $article, 'comments' => $comment]);
+        $votes = $votesRepository->findBy(['article'=>$article]);
+        return $this->render('article/index.html.twig', ['commentForm' => $form->createView(), 'article' => $article, 'comments' => $comment, 'votes'=>$votes]);
     }
 
-    #[Route('/article/evaulate', name: 'article_evaulate')]
-    public function evaulate(ArticleRepository $articleRepository,){
+    #[Route('/article/UpVote/{id}', name: 'article_UpVote')]
+    public function UpVote(Article $article, ArticleRepository $articleRepository, VotesRepository $votesRepository): Response
+    {
+        $newUpVote = new Votes();
+        $newUpVote->setUpVote(1);
+        $newUpVote->setArticle($article);
+        //$vote = $votesRepository ->findBy(['article'=>$article]);
+        $votesRepository->save($newUpVote, true);
+        //dd($newUpVote->getUpVote());
+        return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
 
+    }
 
+    #[Route('/article/DownVote/{id}', name: 'article_DownVote')]
+    public function DownVote(Article $article, ArticleRepository $articleRepository, VotesRepository $votesRepository): Response
+    {
+        $NewDownVote = new Votes();
+        $NewDownVote->setDownVote(1);
+        $NewDownVote->setArticle($article);
+        $votesRepository->save($NewDownVote, true);
+        return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
     }
 
     #[Route('admin/article/delete/{id}', name: 'article_delete')]
@@ -67,7 +85,7 @@ class ArticleController extends AbstractController
             'notice',
             'Article with id ' . $id . ' has been deleted.'
         );
-        return $this->redirectToRoute('app_index');
+        return $this->redirectToRoute('admin');
     }
 
     #[Route('admin/article/edit/{id}', name: 'article_edit')]

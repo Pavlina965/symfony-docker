@@ -28,12 +28,14 @@ class Article
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\Column]
-    private ?int $evaulation = 0;
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Votes::class, orphanRemoval: true)]
+    private Collection $votes;
+
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->votes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -107,15 +109,34 @@ class Article
         return $this;
     }
 
-    public function getEvaulation(): ?int
+    /**
+     * @return Collection<int, Votes>
+     */
+    public function getVotes(): Collection
     {
-        return $this->evaulation;
+        return $this->votes;
     }
 
-    public function setEvaulation(?int $evaulation): self
+    public function addVote(Votes $vote): self
     {
-        $this->evaulation = $evaulation;
+        if (!$this->votes->contains($vote)) {
+            $this->votes->add($vote);
+            $vote->setArticle($this);
+        }
 
         return $this;
     }
+
+    public function removeVote(Votes $vote): self
+    {
+        if ($this->votes->removeElement($vote)) {
+            // set the owning side to null (unless already changed)
+            if ($vote->getArticle() === $this) {
+                $vote->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

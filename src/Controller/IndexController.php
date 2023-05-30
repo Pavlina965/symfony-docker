@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Votes;
 use App\Repository\ArticleRepository;
+use App\Repository\VotesRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use MongoDB\Driver\Manager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,10 +21,11 @@ class IndexController extends AbstractController
 
 
     #[Route(name: 'app_index')]
-    public function articlesUser(ArticleRepository $articleRepository): Response
+    public function articlesUser(ArticleRepository $articleRepository, VotesRepository $votesRepository): Response
     {
         $article = $articleRepository->findAll();
-        return $this->render("index/index.html.twig", ['articles' => $article]);
+        $votes = $votesRepository->findBy(['article'=>$article]);
+        return $this->render("index/index.html.twig", ['articles' => $article, 'votes'=>$votes]);
     }
 
     #[Route('/admin',name: 'admin')]
