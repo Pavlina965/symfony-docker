@@ -13,7 +13,7 @@
                 <p>vytvořeno:
                     {{ article.date|date("d.m.Y") }}
                 </p>
-                {% set upVotes=0 %}
+              {#    {% set upVotes=0 %}
                 {% set downVotes=0 %}
                 {% for vote in votes %}
                     {% if vote.getUpVote is same as (1) %}
@@ -22,8 +22,9 @@
                     {% set downVotes = downVotes + 1 %}
                     {% endif %}
                 {% endfor %}
-                <p>likes: {{ upVotes }}</p>
-                <p>dislikes: {{ downVotes }}</p>
+              #}
+                <p>likes: {{ votes.UpVote }}</p>
+                <p>dislikes: {{ votes.DownVote }}</p>
                 <div class="articleEdit">
                     <span>
                         <a href="{{ path('article_UpVote', {id: article.id}) }}">like</a>
