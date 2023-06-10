@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Security;
+
 use App\entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
@@ -31,27 +32,31 @@ use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 
-
 class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
-    private UserRepository $userRepository;
-    private  RouterInterface $router;
 
-    public function __construct(UserRepository $userRepository, RouterInterface $router)
+    private UserRepository $userRepository;
+    private RouterInterface $router;
+    private Security $security;
+
+
+    public function __construct(UserRepository $userRepository, RouterInterface $router, Security $security)
     {
-        $this->userRepository =$userRepository;
+        $this->userRepository = $userRepository;
         $this->router = $router;
+        $this->security = $security;
     }
+
     public function authenticate(Request $request): Passport
     {
-        $username =$request->request->get('_username');
-        $password =$request->request->get('_password');
+        $username = $request->request->get('_username');
+        $password = $request->request->get('_password');
         return new Passport
         (
-            new UserBadge($username, function ($userIdentifier){
-                $user =$this->userRepository->findOneBy(['username'=>$userIdentifier]);
-                if (!$user){
+            new UserBadge($username, function ($userIdentifier) {
+                $user = $this->userRepository->findOneBy(['username' => $userIdentifier]);
+                if (!$user) {
                     throw new UserNotFoundException();
                 }
 
@@ -59,26 +64,34 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             }),
             new PasswordCredentials($password)
         );
-            //new CustomCredentials(function ($credentials, User $user){
-            //    //dd($credentials, $user);
-            //    //return $credentials==='tada';
-            //}, $password)
+        //new CustomCredentials(function ($credentials, User $user){
+        //    //dd($credentials, $user);
+        //    //return $credentials==='tada';
+        //}, $password)
         // TODO: Implement authenticate() method.
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if($target=$this->getTargetPath($request->getSession(),$firewallName)){
-            
+        if ($target = $this->getTargetPath($request->getSession(), $firewallName)) {
+
         }
-        return new RedirectResponse(
-            $this->router->generate('app_index')
-        );
+        $user = $this->security->getUser()->getUserIdentifier();
+        //dd($user);
+        if ($user === 'admin') {
+            return new RedirectResponse(
+                $this->router->generate('admin')
+            );
+        } else {
+            return new RedirectResponse(
+                $this->router->generate('app_index')
+            );
+        }
         // TODO: Implement onAuthenticationSuccess() method.
     }
 
- protected function getLoginUrl(Request $request): string
- {
-    return $this->router->generate('app_login');
- }
+    protected function getLoginUrl(Request $request): string
+    {
+        return $this->router->generate('app_login');
+    }
 }

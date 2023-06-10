@@ -1,29 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="content">
+    <div class="content">
 
-		{% for article in articles %}
+        {% for article in articles %}
+            {% if article.date < date() %}
 
-			<div class="article">
-				<h3 class="articlePrewiev">
-					<a href="{{ path('article_show', {id: article.id}) }}">{{ article.name }}</a>
-				</h3>
-				<div class="articleContent">
-				<p >{{ article.content }}</p>
+                <div class="article">
+                    <h3 class="articlePrewiev">
+                        <a href="{{ path('article_show', {id: article.id}) }}">{{ article.name }}</a>
+                    </h3>
+                    <div class="articleContent">
+                        <p>{{ article.content }}</p>
 
-				</div>
-				<div class="articleInfo">
+                    </div>
+                    <div class="articleInfo">
 
 					<span>
-						number of comments: {{article.getComments|length}}
+						number of comments: {{ article.getComments|length }}
 					</span>
-					<span>published at: {{ article.date|date("d.m.y") }}</span>
+                        <span>published at: {{ article.date|date("d.m.y") }}</span>
 
 
-                    <span>popularity: {{article.getVotes|length }}</span>
-				</div>
-			</div>
-		{% endfor %}
-	</div>
+                        <span>popularity:</span>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -8,16 +8,16 @@
         <table>
             <tr>
                 <th>Name</th>
-                <th>Release date</th>
+                <th>Publish date</th>
                 <th>ID</th>
-                <th>Released</th>
+                <th>Published</th>
             </tr>
             {% for article in articles %}
                 <tr>
                 <td><a href="{{ path('article_show', {id: article.id}) }}">{{ article.name }}</a></td>
                 <td>{{ article.date|date("d.m.y") }}</td>
                 <td>{{ article.id }}</td>
-                <td>{% if article.date %}
+                <td>{% if article.date < date() %}
                 published
                 {% else %}
                     not published
