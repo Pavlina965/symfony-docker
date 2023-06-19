@@ -4,7 +4,7 @@
     <div class="content">
 
         {% for article in articles %}
-            {% if article.date < date() %}
+            {% if article.date <= date() %}
 
                 <div class="article">
                     <h3 class="articlePrewiev">

@@ -17,7 +17,7 @@
                 <td><a href="{{ path('article_show', {id: article.id}) }}">{{ article.name }}</a></td>
                 <td>{{ article.date|date("d.m.y") }}</td>
                 <td>{{ article.id }}</td>
-                <td>{% if article.date < date() %}
+                <td>{% if article.date =< date() %}
                 published
                 {% else %}
                     not published
