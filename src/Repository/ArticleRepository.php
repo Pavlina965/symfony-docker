@@ -43,10 +43,10 @@ class ArticleRepository extends ServiceEntityRepository
     {
         $dateNow = new \DateTime();
         $dateReleased = $article->getDate();
-        
+
         if ($dateNow === $dateReleased) {
-            true;
-        } else false;
+           return true;
+        } else return false;
     }
 
     //    /**

@@ -31,6 +31,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Votes $votes = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,6 +111,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getVotes(): ?Votes
+    {
+        return $this->votes;
+    }
+
+    public function setVotes(?Votes $votes): self
+    {
+        $this->votes = $votes;
 
         return $this;
     }

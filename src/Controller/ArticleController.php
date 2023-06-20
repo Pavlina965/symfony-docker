@@ -9,6 +9,7 @@ use App\Form\ArticleType;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
+use App\Repository\UserRepository;
 use App\Repository\VotesRepository;
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -54,11 +55,24 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/UpVote/{id}', name: 'article_UpVote')]
-    public function UpVote(Article $article, ArticleRepository $articleRepository, VotesRepository $votesRepository): Response
+    public function UpVote(Article $article, ArticleRepository $articleRepository, VotesRepository $votesRepository, UserRepository $userRepository): Response
     {
         $vote = $votesRepository->findOneby(['article' => $article]);
-        $upVote = $vote->setUpvote($vote->getUpVote() + 1);
-        $votesRepository->save($upVote, true);
+        $user = $this->getUser();
+
+        dd($user);
+        if(!$user){
+           return $this->redirectToRoute('app_login');
+        }
+        else{
+            $upVote = $vote->setUpvote($vote->getUpVote() + 1);
+            $votesRepository->save($upVote, true);
+            $vote->addUser($userVote);
+            //$userVote->setVotes(true);
+
+        }
+        //dd($user);
+
 
         return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
 

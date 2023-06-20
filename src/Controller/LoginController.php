@@ -68,8 +68,7 @@ class LoginController extends AbstractController
         //$users = $userRepository->find($id);
         //$userRepository->remove($users,true);
         $users = $userRepository->findAll();
-        //dd($users);
-
+        dd($users);
 
         return new Response('deleted');
     }
